@@ -3,24 +3,28 @@ if [ "$(id -u)" -ne 0 ]; then
   echo "Please run with sudo"
   exit 1
 fi
-ARCH=$(uname -m)
-if [ -z "${ARCH##*arm*}" ]; then
-  FILENAME="vhusbdarm"
-elif [ "$ARCH" = "mips" ]; then
-  FILENAME="vhusbdmips"
-elif [ "$ARCH" = "mipsel" ]; then
-  FILENAME="vhusbdmipsel"
-elif [ -z "${ARCH##*x86_64*}" ]; then
-  FILENAME="vhusbdx86_64"
-elif [ -z "${ARCH##*aarch64*}" ]; then
-  FILENAME="vhusbdarm64"
+if [ -n "$1" ]; then
+  FILENAME="$1"
 else
-  FILENAME="vhusbdi386"
+  ARCH=$(uname -m)
+  if [ -z "${ARCH##*arm*}" ]; then
+    FILENAME="vhusbdarm"
+  elif [ "$ARCH" = "mips" ]; then
+    FILENAME="vhusbdmips"
+  elif [ "$ARCH" = "mipsel" ]; then
+    FILENAME="vhusbdmipsel"
+  elif [ -z "${ARCH##*x86_64*}" ]; then
+    FILENAME="vhusbdx86_64"
+  elif [ -z "${ARCH##*aarch64*}" ]; then
+    FILENAME="vhusbdarm64"
+  else
+    FILENAME="vhusbdi386"
+  fi
 fi
 wget https://www.virtualhere.com/sites/default/files/usbserver/$FILENAME
 chmod +x $FILENAME
 mv $FILENAME /usr/local/sbin
-mkdir /usr/local/etc/virtualhere
+mkdir -p /usr/local/etc/virtualhere
 if [ -d "/run/systemd/system" ]; then
   cat << EOF > /etc/systemd/system/virtualhere.service
 [Unit]
