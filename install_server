@@ -20,6 +20,7 @@ fi
 wget https://www.virtualhere.com/sites/default/files/usbserver/$FILENAME
 chmod +x $FILENAME
 mv $FILENAME /usr/local/sbin
+mkdir /usr/local/etc/virtualhere
 if [ -d "/run/systemd/system" ]; then
   cat << EOF > /etc/systemd/system/virtualhere.service
 [Unit]
@@ -28,7 +29,7 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/usr/local/sbin/$FILENAME -b
+ExecStart=/usr/local/sbin/$FILENAME -b -c /usr/local/etc/virtualhere/config.ini
 
 [Install]
 WantedBy=multi-user.target
