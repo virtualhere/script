@@ -1,14 +1,14 @@
 #!/bin/sh
-if [ $(id -u) -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
   echo "Please run with sudo"
   exit 1
 fi
 ARCH=$(uname -m)
 if [ -z "${ARCH##*arm*}" ]; then
   FILENAME="vhusbdarm"
-elif [ $ARCH == "mips" ]; then
+elif [ "$ARCH" = "mips" ]; then
   FILENAME="vhusbdmips"
-elif [ $ARCH == "mipsel" ]; then
+elif [ "$ARCH" = "mipsel" ]; then
   FILENAME="vhusbdmipsel"
 elif [ -z "${ARCH##*x86_64*}" ]; then
   FILENAME="vhusbdx86_64"
