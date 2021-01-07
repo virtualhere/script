@@ -1,11 +1,14 @@
-# VirtualHere server install script
+# VirtualHere server install and uninstall script
 
 VirtualHere server install script for `systemd` based systems (e.g Raspberry
 Pi and most modern Linux Distributions).
 
-    curl https://raw.githubusercontent.com/virtualhere/script/main/install_server | sudo sh
+## Installing default version
 
-(enter in your sudo password when prompted)
+To install the default server version for your architecture, run the following
+command and enter in your sudo password when prompted.
+
+    curl https://raw.githubusercontent.com/virtualhere/script/main/install_server | sudo sh
 
 ## Installing optimized or custom version
 
@@ -16,3 +19,10 @@ section of [Linux USB Server](https://www.virtualhere.com/usb_server_software)
 page.
 
     curl https://raw.githubusercontent.com/virtualhere/script/main/install_server | sudo sh -s - vhusbdarmpi4
+
+## Uninstalling server
+
+To uninstall the server, run the following command. This script will remove
+server binary and systemd service, but it will preserve the configuration file.
+
+    curl https://raw.githubusercontent.com/virtualhere/script/main/uninstall_server | sudo sh
