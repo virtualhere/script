@@ -1,0 +1,18 @@
+#!/bin/sh
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Please run with sudo"
+  exit 1
+fi
+UNIT="/etc/systemd/system/virtualhere.service"
+if [ -f "$UNIT" ]; then
+  systemctl stop virtualhere.service
+  systemctl disable virtualhere.service
+  FILENAME="$(awk -F'[ =]' '/ExecStart=/ {print $2}' $UNIT)"
+  CONFIG="$(awk -F'[ =]' '/ExecStart=/ {print $5}' $UNIT)"
+  rm "$FILENAME" "$UNIT"
+  systemctl daemon-reload
+  echo "Configuration file $CONFIG"
+  echo "was not removed. Remove it manualy if you wish."
+else
+  echo "Error, only systemd is supported"
+fi
