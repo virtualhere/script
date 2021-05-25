@@ -25,7 +25,7 @@ wget https://www.virtualhere.com/sites/default/files/usbserver/$FILENAME
 chmod +x $FILENAME
 mv $FILENAME /usr/local/sbin
 mkdir -p /usr/local/etc/virtualhere
-if [ -d "/run/systemd/system" ]; then
+if [ -d "/etc/systemd/system" ]; then
   cat << EOF > /etc/systemd/system/virtualhere.service
 [Unit]
 Description=VirtualHere Server
